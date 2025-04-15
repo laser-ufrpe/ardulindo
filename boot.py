@@ -99,3 +99,14 @@ def adjustSpeed(sensor):
     rbreak = (error>0.0)*error       # adjust right break
     setSpeed(1-lbreak, 1-rbreak)     # set correct speed
 
+#===========================================================
+#                      LOOP FUNCTION
+#===========================================================
+def loop():
+  move(Front)
+  while True:
+    sensor = getSensor()
+    adjustSpeed(sensor)
+    time.sleep(1)
+#===========================================================
+loop()
