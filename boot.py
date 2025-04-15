@@ -70,3 +70,20 @@ def getSensor():
   for pin in Sensor:
     sum = (sum<<1) + inTape(pin)
   return sum
+#===========================================================
+#                  SENSOR FAIL HANDLER
+#===========================================================
+def sortMoreBit(bit, list):
+  return sorted(list, key = lambda k: -bin(k).count(bit))
+
+def bitEquality(a, b):
+  mask = (1<<7)-1
+  return bin(~(a ^ b) & mask).count('1')
+#===========================================================
+def handlerFail(sensor):
+  if sensor not in errorLookup:
+    sensor = max(
+      sortMoreBit('1', errorLookup.keys()), 
+      key = lambda k: bitEquality(k,sensor))
+  return sensor
+
