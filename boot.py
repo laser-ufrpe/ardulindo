@@ -87,3 +87,15 @@ def handlerFail(sensor):
       key = lambda k: bitEquality(k,sensor))
   return sensor
 
+#===========================================================
+#                  ADJUST SENSOR SPEED
+#===========================================================
+def adjustSpeed(sensor):
+  if sensor not in failList:
+    sensor = handlerFail(sensor)     # handler possible read problems
+    error = errorLookup[sensor]      # get error value
+    lbreak, rbreak = 0.0, 0.0        # start break in zero
+    lbreak = -(error<0.0)*error      # adjust left break
+    rbreak = (error>0.0)*error       # adjust right break
+    setSpeed(1-lbreak, 1-rbreak)     # set correct speed
+
