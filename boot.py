@@ -19,3 +19,15 @@ Sensor = [27, 26, 25, 33, 32, 35, 34] # sensor pins
 Stop = [0,0,0,0]                     # stop direction
 Front, Back = [0,1,0,1], [1,0,1,0]   # front and back directions
 Right, Left = [1,0,0,0], [0,0,1,0]   # right and left directions
+#===========================================================
+#                    SUPPORT FUNCTIONS
+#===========================================================
+def setPin(pin, val): Pin(pin, Pin.OUT).value(val)
+def setPWM(pin, val, freq=1000): PWM(Pin(pin), freq=freq).duty(int(val*maxSpeed))
+
+def getPin(pin): return Pin(pin, Pin.IN).value()
+def getADC(pin): return ADC(Pin(pin, Pin.IN), atten=ADC.ATTN_11DB).read()
+def inTape(pin): return isBlack ^ (getADC(pin)<blackValue)
+#===========================================================
+def getTest():
+  print(f'{getSensor():07b}')
