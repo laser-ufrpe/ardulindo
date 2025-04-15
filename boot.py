@@ -31,3 +31,20 @@ def inTape(pin): return isBlack ^ (getADC(pin)<blackValue)
 #===========================================================
 def getTest():
   print(f'{getSensor():07b}')
+#===========================================================
+#                   MOVIMENT FUNCTIONS
+#===========================================================
+def move(dir):
+  for i in range(4):
+    setPin(Motors[i], dir[i])
+
+def setSpeed(left, right):
+  setPWM(17, left)
+  setPWM(16, right)
+
+#===========================================================
+def getSensor():
+  sum = 0
+  for pin in Sensor:
+    sum = (sum<<1) + inTape(pin)
+  return sum
