@@ -46,8 +46,19 @@ def inTape(val): return isBlack ^ (val<blackValue)
 #===========================================================
 #                   DEBUG FUNCTIONS
 #===========================================================
-def getTest():
-  print(f'{getSensor():07b}')
+def debugSensorDig():
+  while True:
+    sensors = getSensorDig();         print(f'read: {sensors:07b}')
+    sensors = handlerFail(sensors);   print(f'fixed: {sensors:07b}\n')
+    time.sleep(1)
+
+def debugSensorADC():
+  while True:
+    sensors = getSensorADC();        print(f'read: {sensors}')
+    sensors = toDigital(sensors);    print(f'conv: {sensors:07b}')
+    sensors = handlerFail(sensors);  print(f'fixed: {sensors:07b}\n')
+    time.sleep(1)
+
 #===========================================================
 #                   ERROR LOOKUP TABLE
 #===========================================================
