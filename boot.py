@@ -59,6 +59,21 @@ def debugSensorADC():
     sensors = handlerFail(sensors);  print(f'fixed: {sensors:07b}\n')
     time.sleep(1)
 
+#=========================================================== 
+@micropython.native
+def mv(dir, speed, delay):
+  move(dir)
+  setSpeed(speed[0], speed[1])
+  time.sleep(delay)
+
+@micropython.native
+def curve(dir, speed, delay):
+  maxSpeed=1023
+  mv(Front, [1,1], 1) 
+  mv(dir, speed, delay)
+  move(Stop)
+
+
 #===========================================================
 #                   ERROR LOOKUP TABLE
 #===========================================================
