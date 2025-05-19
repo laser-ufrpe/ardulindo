@@ -102,18 +102,35 @@ errorLookup = {
 @micropython.native
 def move(dir):
   for i in range(4):
-    setPin(Motors[i], dir[i])
+    setPin(motorPins[i], dir[i])
 
 @micropython.native
 def setSpeed(left, right):
-  setPWM(17, left)
-  setPWM(16, right)
+  setPWM(speedPins[0], left)
+  setPWM(speedPins[1], right)
 
 #===========================================================
-def getSensor():
+#                   SENSORS FUNCTIONS
+#===========================================================
+def getSensorDig():
   sum = 0
-  for pin in Sensor:
-    sum = (sum<<1) + inTape(pin)
+  for pin in sensorPins:
+    sum = (sum<<1) + getPin(pin)
+  return sum
+
+@micropython.native
+def getSensorADC():
+  sensorArr = []
+  for pin in sensorPins:
+    sensorVal = getADC(pin)
+    sensorArr.append(sensorVal)
+  return sensorArr
+
+@micropython.native
+def toDigital(sensorArr):
+  sum = 0
+  for val in sensorArr:
+    sum = (sum<<1) + inTape(val)
   return sum
 #===========================================================
 #                  SENSOR FAIL HANDLER
