@@ -1,24 +1,33 @@
 #===========================================================
-#                      BLUETOOTH CODE
+#                       SETUP CODE
 #===========================================================
 import time
+import machine
 from machine import Pin, ADC, PWM
 
-import ble_repl
-ble_repl.start()
+machine.freq(240000000)
+
 #===========================================================
 #                  ENVIROMENT VARIABLES
-#===========================================================
-isBlack = 1           # Tape color
-maxSpeed = 700        # Max PWM Speed     (0-1023)
-blackValue = 3500     # Set What is Black (0-4095) 
+#=========================================================== 
+maxSpeed = 600         # Max PWM Speed (0-1023)
+lineSpeed = 0.5        # Max line Speed  = 50%
+curveSpeed = 1.0       # Max curve Speed = 100%
+sensorDelay = 0.005    # time for wait between sensor read
+#=========================================================== 
+isBlack = 1            # Tape color
+blackValue = 3800      # Set What is Black (0-4095)
 
-Motors = [2, 4, 0, 15]                # set motors pins
-Sensor = [27, 26, 25, 33, 32, 35, 34] # sensor pins
+speedPins = [22, 23]                        # set speed pins
+motorPins  = [21, 19, 18, 5]                # set motors pins
+sensorPins = [34, 35, 32, 33, 25, 26, 27]   # sensor pins
+
+errorWeights = [0.0, 1.0, 1.0, 0.0, 0.0, 0.12, 0.17]
 
 Stop = [0,0,0,0]                     # stop direction
-Front, Back = [0,1,0,1], [1,0,1,0]   # front and back directions
-Right, Left = [1,0,0,0], [0,0,1,0]   # right and left directions
+Front, Back = [0,1,1,0], [1,0,0,1]   # front and back directions
+Right, Left = [0,1,0,1], [1,0,1,0]   # right and left directions
+
 #===========================================================
 #                    SUPPORT FUNCTIONS
 #===========================================================
