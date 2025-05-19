@@ -166,6 +166,20 @@ def adjustSpeed(sensor):
     rbreak = (error>0.0)*error       # adjust right break
     setSpeed(1-lbreak, 1-rbreak)     # set correct speed
 
+@micropython.native
+def adjustSpeedBasic(sensor):
+  if sensor not in failList:
+    error = errorLookup[sensor]      # get error value
+    if error == 0:
+      setSpeed(lineSpeed,lineSpeed)
+      move(Front)
+    if error != 0:
+      setSpeed(curveSpeed,curveSpeed)
+    if error < -0.09:
+      move(Left)
+    if error > +0.09:
+      move(Right)
+
 #===========================================================
 #                      LOOP FUNCTION
 #===========================================================
