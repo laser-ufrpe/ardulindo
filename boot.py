@@ -31,12 +31,20 @@ Right, Left = [0,1,0,1], [1,0,1,0]   # right and left directions
 #===========================================================
 #                    SUPPORT FUNCTIONS
 #===========================================================
+@micropython.native
 def setPin(pin, val): Pin(pin, Pin.OUT).value(val)
-def setPWM(pin, val, freq=1000): PWM(Pin(pin), freq=freq).duty(int(val*maxSpeed))
+@micropython.native
+def setPWM(pin, val): PWM(Pin(pin), freq=1000).duty(int(val*maxSpeed))
 
+@micropython.native
 def getPin(pin): return Pin(pin, Pin.IN).value()
+@micropython.native
 def getADC(pin): return ADC(Pin(pin, Pin.IN), atten=ADC.ATTN_11DB).read()
-def inTape(pin): return isBlack ^ (getADC(pin)<blackValue)
+@micropython.native
+def inTape(val): return isBlack ^ (val<blackValue)
+
+#===========================================================
+#                   DEBUG FUNCTIONS
 #===========================================================
 def getTest():
   print(f'{getSensor():07b}')
@@ -65,10 +73,12 @@ errorLookup = {
 #===========================================================
 #                   MOVIMENT FUNCTIONS
 #===========================================================
+@micropython.native
 def move(dir):
   for i in range(4):
     setPin(Motors[i], dir[i])
 
+@micropython.native
 def setSpeed(left, right):
   setPWM(17, left)
   setPWM(16, right)
@@ -82,26 +92,31 @@ def getSensor():
 #===========================================================
 #                  SENSOR FAIL HANDLER
 #===========================================================
+@micropython.native
 def sortMoreBit(bit, list):
   return sorted(list, key = lambda k: -bin(k).count(bit))
 
+@micropython.native
 def bitEquality(a, b):
   mask = (1<<7)-1
   return bin(~(a ^ b) & mask).count('1')
+
 #===========================================================
+sortedErrMap = sortMoreBit('1', errorLookup.keys())
+
+@micropython.native
 def handlerFail(sensor):
-  if sensor not in errorLookup:
-    sensor = max(
-      sortMoreBit('1', errorLookup.keys()), 
-      key = lambda k: bitEquality(k,sensor))
-  return sensor
+  if sensor in failList + list(errorLookup):
+    return sensor
+
+  return max(sortedErrMap, key = lambda k: bitEquality(k,sensor))
 
 #===========================================================
 #                  ADJUST SENSOR SPEED
 #===========================================================
+@micropython.native
 def adjustSpeed(sensor):
   if sensor not in failList:
-    sensor = handlerFail(sensor)     # handler possible read problems
     error = errorLookup[sensor]      # get error value
     lbreak, rbreak = 0.0, 0.0        # start break in zero
     lbreak = -(error<0.0)*error      # adjust left break
@@ -111,6 +126,7 @@ def adjustSpeed(sensor):
 #===========================================================
 #                      LOOP FUNCTION
 #===========================================================
+@micropython.native
 def loop():
   move(Front)
   while True:
@@ -119,3 +135,4 @@ def loop():
     time.sleep(1)
 #===========================================================
 loop()
+
