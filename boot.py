@@ -186,10 +186,18 @@ def adjustSpeedBasic(sensor):
 @micropython.native
 def loop():
   move(Front)
+  setSpeed(1.0, 1.0) # full speed
+  time.sleep(0.15)
+  
   while True:
-    sensor = getSensor()
-    adjustSpeed(sensor)
-    time.sleep(1)
+    sensors = getSensorADC()         # get 7 sensor values
+    sensors = toDigital(sensors)     # convert to digital
+    sensors = handlerFail(sensors)   # handler read problems
+    adjustSpeedBasic(sensors)        # adjust motors speed with PID
+    time.sleep(sensorDelay)          # wait to next interaction
+
+#===========================================================
+#                      STARTUP CODE
 #===========================================================
 loop()
 
