@@ -80,21 +80,21 @@ def curve(dir, speed, delay):
 failList = [ 0, 0b_1111111 ]
 
 errorLookup = {
-  0b_1000000: -1.0,  # left 6
-  0b_1100000: -0.7,  # left 5
-  0b_1110000: -0.4,  # left 4
-  0b_0111000: -0.1,  # left 3
-
-  0b_1111100: -1.0,  # left 2
-  0b_0111100: -0.5,  # left 1
-  0b_0011100:  0.0,  # center
-  0b_0011110: +0.5,  # right 1
-  0b_0011111: +1.0,  # right 2
-
-  0b_0001110: +0.1,  # right 3
-  0b_0000111: +0.4,  # right 4
-  0b_0000011: +0.7,  # right 5
-  0b_0000001: +1.0,  # right 6
+  0b_1000000: -errorWeights[6],  # left 6
+  0b_1100000: -errorWeights[5],  # left 5
+  0b_1110000: -errorWeights[4],  # left 4
+  0b_0111000: -errorWeights[3],  # left 3
+  
+  0b_0011111: -errorWeights[2],  # left 2 internal
+  0b_0011110: -errorWeights[1],  # left 1 internal
+  0b_0011100:  errorWeights[0],  # center
+  0b_0111100: +errorWeights[1],  # right 1 internal
+  0b_1111100: +errorWeights[2],  # right 2 internal
+  
+  0b_0001110: +errorWeights[3],  # right 3
+  0b_0000111: +errorWeights[4],  # right 4
+  0b_0000011: +errorWeights[5],  # right 5
+  0b_0000001: +errorWeights[6],  # right 6
 }
 #===========================================================
 #                   MOVIMENT FUNCTIONS
