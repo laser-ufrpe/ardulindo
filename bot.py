@@ -3,7 +3,7 @@
 #===========================================================
 import time
 import machine
-from machine import Pin, ADC, PWM
+from machine import Pin, ADC, PWM 
 
 machine.freq(240000000)
 
@@ -24,6 +24,8 @@ sensorPins = [34, 35, 32, 33, 25, 26, 27]   # sensor pins
 
 errorWeights = [0.0, 1.0, 1.0, 0.0, 0.0, 0.12, 0.17]
 
+def move(lspeed, rspeed):
+  
 Stop = [0,0,0,0]                     # stop direction
 Front, Back = [0,1,1,0], [1,0,0,1]   # front and back directions
 Right, Left = [0,1,0,1], [1,0,1,0]   # right and left directions
