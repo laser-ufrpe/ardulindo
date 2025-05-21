@@ -2,10 +2,7 @@
 #                       SETUP CODE
 #===========================================================
 import time
-import machine
 from machine import Pin, ADC, PWM 
-
-machine.freq(240000000)
 
 #===========================================================
 #                  ENVIROMENT VARIABLES
@@ -23,8 +20,6 @@ motorPins  = [21, 19, 18, 5]                # set motors pins
 sensorPins = [34, 35, 32, 33, 25, 26, 27]   # sensor pins
 
 errorWeights = [0.0, 1.0, 1.0, 0.0, 0.0, 0.12, 0.17]
-
-def move(lspeed, rspeed):
   
 Stop = [0,0,0,0]                     # stop direction
 Front, Back = [0,1,1,0], [1,0,0,1]   # front and back directions
@@ -186,20 +181,15 @@ def adjustSpeedBasic(sensor):
 #                      LOOP FUNCTION
 #===========================================================
 @micropython.native
-def loop():
+def start():
   move(Front)
   setSpeed(1.0, 1.0) # full speed
   time.sleep(0.15)
-  
+
   while True:
     sensors = getSensorADC()         # get 7 sensor values
     sensors = toDigital(sensors)     # convert to digital
     sensors = handlerFail(sensors)   # handler read problems
     adjustSpeedBasic(sensors)        # adjust motors speed with PID
     time.sleep(sensorDelay)          # wait to next interaction
-
-#===========================================================
-#                      STARTUP CODE
-#===========================================================
-loop()
 
