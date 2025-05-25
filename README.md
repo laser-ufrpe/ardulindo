@@ -4,6 +4,16 @@ This is the micro-python code for Ardulindo,
 a first-place winner in the line-follower category 
 at [BJ Bot Cup III](https://sites.google.com/view/bjbotscup/)
 
+## Car Componets
+- **Controller:** 1xESP32
+- **H-Bridge** 1xL298N
+- **Battery:** 2x18650
+- **Motors:** 2xN20 6v/3000rpm
+- **Sensor:** 1xQRT 8 channels/
+- **Tires:** 2xOring with 4mm of diameter
+- **Wheels:** 2xPrinted to Oring use
+- **Chassis:** 1xPrinted to zip tie use
+
 ## How to Setup Debian/Ubuntu Linux
 - `sudo apt update`
 - `sudo apt install python3 python3-pip`
