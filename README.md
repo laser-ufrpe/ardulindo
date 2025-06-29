@@ -31,6 +31,7 @@ at [BJ Bot Cup III](https://sites.google.com/view/bjbotscup/)
 We would like to express our deepest gratitude to the individuals whose exceptional contributions made a significant impact on this project:
 
 - **Camila Almeida (Team Leader and Heads Eletronic):** [Linkedin](https://www.linkedin.com/in/camila-almeida-5a1a9a364), [Github](https://github.com/CamisAlmeida)
+- **Emmanuel Nascimento (Heads Programming):** [Linkedin](https://www.linkedin.com/in/yet1dev), [Github](https://github.com/yet1dev)
 - **Abner Barros (Lab Leader and Project Mentor):** [Linkedin](https://www.linkedin.com/in/abner-barros-5b86409) 
 
 ### Internal Team Acknowledgements
